@@ -33,12 +33,11 @@ public class ServerChatHandler extends ChannelHandlerAdapter {
             String otherMessage = String.format(massage, user, msg);
             String selfMessage = String.format(massage, "我", msg);
             System.out.print(otherMessage);
-
             ServerHeartBeatHandler.channelGroup.forEach(ch -> {
                 if (ch == ctx.channel()) {
-                    ServerHeartBeatHandler.channelGroup.writeAndFlush(selfMessage);
+                    ch.writeAndFlush(selfMessage);
                 } else {
-                    ServerHeartBeatHandler.channelGroup.writeAndFlush(otherMessage);
+                    ch.writeAndFlush(otherMessage);
                 }
             });
         }
